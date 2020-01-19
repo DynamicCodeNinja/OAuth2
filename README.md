@@ -2,6 +2,15 @@
 
 This library is aimed at being a customizable OAuth2 server framework that allows developers to easily extend and implement only the pieces of the framework that they require.
 
+## Server Types
+
+| Server Type   | Status      | Package Link |
+| ------------- | ----------- | ------------ |
+| Authorization | Not Started |              |
+| Resource      | Not Started |              |
+
+
+
 ## Grant Types
 
 | Grant Type                          | Status      | Package Link |
@@ -27,6 +36,10 @@ This library is aimed at being a customizable OAuth2 server framework that allow
 | Addition Type                      | Status      | Package Link |
 | ---------------------------------- | ----------- | ------------ |
 | Proof Key for Code Exchange (PKCE) | Not Started |              |
-|                                    |             |              |
-|                                    |             |              |
+
+## Feature Additions
+
+| Feature Type                   | Status      | Package Link |
+| ------------------------------ | ----------- | ------------ |
+| Authorization Server Meta Data | Not Started |              |
 
