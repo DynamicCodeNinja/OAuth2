@@ -3,23 +3,24 @@
 ## Authorization Request
 
 **<u>Request Parameters</u>**
-**response_type** => required MUST be set to "code"
-**client_id** => required
-**redirect_uri** => optional
-**scope** => optional
-**state** => recommended SHOULD be used for preventing cross-site request forgery as described in section 10.12
+
+- **response_type** => required MUST be set to "code"
+- **client_id** => required
+- **redirect_uri** => optional
+- **scope** => optional
+- **state** => recommended SHOULD be used for preventing cross-site request forgery as described in section 10.12
 
 **<u>Response Parameters</u>**
 
-**code** => required
-**state** => required if present in request; must be the exact value as received in the require
+- **code** => required
+- **state** => required if present in request; must be the exact value as received in the require
 
 **<u>Error Parameters</u>**
 
-**error** => required (*invalid_request*, *unauthorized_client*, *access_denied*, *unsupported_response_type*, *invalid_scope*, *server_error*, *temporarily_unavailable*)
-**error_description** => optional
-**error_uri** => optional
-**state** => required if present in request; must be the exact value as received in the require
+- **error** => required (*invalid_request*, *unauthorized_client*, *access_denied*, *unsupported_response_type*, *invalid_scope*, *server_error*, *temporarily_unavailable*)
+- **error_description** => optional
+- **error_uri** => optional
+- **state** => required if present in request; must be the exact value as received in the require
 
 ------
 
@@ -39,15 +40,19 @@
 
 **<u>Request Parameters:</u>**
 
-**grant_type** => required (*authorization_code*)
-**code** => required
-**redirect_uri** => required, if included in the authorization request
-**client_id** => required, if not authenticating with the authorization server as described in Section 3.2.1
+- **grant_type** => required (*authorization_code*)
+- **code** => required
+- **redirect_uri** => required, if included in the authorization request
+- **client_id** => required, if not authenticating with the authorization server as described in Section 3.2.1
+
+If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.
+
+If the request client authentication failed or is invalid the authorization server returns an error response as described in Section 5.2
 
 | RFC  | Section | Text                                                         |
 | ---- | ------- | ------------------------------------------------------------ |
 | 6749 | 4.1.3   | The value for "grant_type" MUST be set to "authorization_code" |
-| 6749 | 4.1.3   | The "redirect_uri" parameter is required if it was included int he authorization request as described in section 4.1.1, and their values MUST be identical |
+| 6749 | 4.1.3   | The "redirect_uri" parameter is required if it was included in the authorization request as described in section 4.1.1, and their values MUST be identical |
 | 6749 | 4.1.3   | If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in Section 3.2.1 |
 | 6749 | 4.1.3   | The authorization server MUST<br />require client authentication for confidential clients or any client that was issued client credentials (or with other authentication requirements)<br />authenticate the client if client authentication is included<br />ensure that the authorization code was issued to the authenticated confidential client, or if the client is public ensure that the code was issued to "client_id" in the request<br />verify that the authorization code is valid<br />ensure that the "redirection_uri" parameter is present if the "redirect_uri" parameter was included in the initial authorization request as described in section 4.1.1, and if included ensure that their values are identical. |
 
