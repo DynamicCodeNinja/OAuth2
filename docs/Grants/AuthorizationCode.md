@@ -1,4 +1,4 @@
-# Authorization Code
+# Grants - Authorization Code
 
 ## Authorization Request
 
