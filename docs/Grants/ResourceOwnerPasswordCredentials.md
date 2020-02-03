@@ -1,11 +1,11 @@
 # Grants - Resource Owner Password Credentials
 
-Request Parameters
+**<u>Request Parameters:</u>**
 
-- grant_type => required MUST be set to "password"
-- username => required
-- password => required
-- scope => optional
+- **grant_type** => required MUST be set to "password"
+- **username** => required
+- **password** => required
+- **scope** => optional
 
 | RFC  | Section | Text                                                         |
 | ---- | ------- | ------------------------------------------------------------ |
