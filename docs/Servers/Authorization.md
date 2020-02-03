@@ -126,3 +126,56 @@ The client informs the authorization server of the desired grant type using the 
 | 6749 | 3.3     | If the client omits the scope parameter when requesting authorization, the authorization server MUST either process the request using a pre-defined default value or fail the request indicating an invalid scope. |
 | 6749 | 3.3     | The authorization server SHOULD document its scope requirements and default value (if defined) |
 
+### Access Token Response Types
+
+#### Successful Response
+
+**<u>Parameters:</u>**
+
+- **access_token** => required
+- **token_type** => required
+- **expires_in** => recommended, if omitted, the authorization server SHOULD provide the expiration time via other means or document the default value
+- **refresh_token** => optional
+- **scope** => optional if identical to the scope requested by the client; otherwise required
+
+| RFC  | Section | Text                                                         |
+| ---- | ------- | ------------------------------------------------------------ |
+| 6749 | 5.1     | The authorization server MUST include the HTTP "Cache-Control" response header field [RFC2616] with a value of "no-store" in any response containing tokens, credentials, or other sensitive information, as well as the "Pragma" response header field [RFC2616] with a value of "no-cache" |
+| 6749 | 5.1     | The client MUST ignore unrecognized value names in the response |
+| 6749 | 5.1     | The authorization server SHOULD document the size of any value it issues. |
+
+#### Error Response
+
+**<u>Response Parameters:</u>**
+
+- **error** => required (invalid_request, invalid_client, invalid_grant, unauthorized_client, unsupported_grant_type, invalid_scope)
+- **error_description** => optional
+- **error_uri** => optional
+
+| RFC  | Section | Text                                                         |
+| ---- | ------- | ------------------------------------------------------------ |
+| 6749 | 5.2     | error[invalid_client]<br />The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported |
+| 6749 | 5.2     | error[invalid_client]<br />If the client attempted to authenticate via the "Authorization" request header field, the authorization server MUST response with an HTTP 401 (Unauthorized) status code and include the "WWW-Authenticate" response header field matching the authentication scheme used by the client. |
+| 6749 | 5.2     | Values for the "error" parameter MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E |
+| 6749 | 5.2     | Values for the "error_description" parameter MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E |
+| 6749 | 5.2     | Values for the "error_uri" parameter MUST conform to the URI-reference syntax |
+| 6749 | 5.2     | Values for the "error_uri" parameter MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E |
+
+### Refreshing an Access Token
+
+Request Parameters:
+
+- grant_type => required MUST be set to "refresh_token"
+- refresh_token => required
+- scope => optional
+
+| RFC  | Section | Text                                                         |
+| ---- | ------- | ------------------------------------------------------------ |
+| 6749 | 6       | The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner |
+| 6749 | 6       | If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in section 3.2.1 |
+| 6749 | 6       | The authorization server MUST:<br />require client authentication for confidential clients or for any client that was issued client credentials (or with other authentication requirements)<br />authenticate the client if client authentication is included and ensure that the refresh token was issued to the authenticated client<br />validate the refresh token |
+| 6749 | 6       | The authorization server MAY issue a new refresh token       |
+| 6749 | 6       | If issued a new refresh token, the client MUST discard the old refresh token and replace it with the new refresh token |
+| 6749 | 6       | The authorization server MAY revoke the old refresh token after issuing a new refresh token to the client |
+| 6749 | 6       | If a new refresh token is issued, the refresh token scope MUST be identical to that of the refresh token included by the client in the request |
+
